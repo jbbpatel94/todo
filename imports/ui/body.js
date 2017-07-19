@@ -5,9 +5,10 @@ import { Tasks } from '../api/tasks.js';
 import './body.html';
 
 Template.body.helpers({
-	tasks() {
-		return Tasks.find({});
-	},
+  tasks() {
+    // Show newest tasks at the top by sorting
+    return Tasks.find({}, { sort: { createdAt: -1 } });
+  },
 });
 Template.body.events({
 	'submit form':function(event){
@@ -15,7 +16,7 @@ Template.body.events({
 		const target = event.target;
 		const text = target.text.value;
 		createdAt = new Date();
-
+	//insert into collection named Tasks
 		Tasks.insert({text :text ,createdAt:createdAt});
 		target.text.value = '';
 	}
